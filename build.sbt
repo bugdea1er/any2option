@@ -7,4 +7,4 @@ ThisBuild / developers := List(Developer("bugdea1er", "Ilya Andreev", "@bugdea1e
 ThisBuild / scalaVersion := "2.13.11"
 
 lazy val root = project in file(".")
-ThisBuild / libraryDependencies += "org.junit.jupiter" % "junit-jupiter" % "5.9.2" % Test
+ThisBuild / libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test

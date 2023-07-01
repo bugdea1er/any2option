@@ -1,59 +1,42 @@
 package com.github.bugdea1er.any2option
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should
 
 /** Tests for implicit any to option conversion */
-final class any2optionTest {
-
-  /** Tests implicit option conversion with Int */
-  @Test def intConversion(): Unit = {
+final class any2optionTest extends AnyFlatSpec with should.Matchers {
+  "Int" should "be implicitly converted to Option" in {
     val integer: Int = 42
     val option: Option[Int] = integer
 
-    assertEquals(Some(integer), option)
+    option should be (Some(integer))
   }
 
-  /** Tests implicit option conversion with String */
-  @Test def stringConversion(): Unit = {
+  "String" should "be implicitly converted to Option" in {
     val string: String = "Hello"
     val option: Option[String] = string
 
-    assertEquals(Some(string), option)
+    option should be (Some(string))
   }
 
-  /** Tests implicit option conversion with null */
-  @Test def nullConversion(): Unit = {
+  "Null" should "be implicitly converted to None" in {
     val nullValue: Any = null
     val option: Option[Any] = nullValue
 
-    assertEquals(None, option)
+    option should be (None)
   }
 
-  /** Tests that this conversion doesn't mess with regular assignment */
-  @Test def optionConversion(): Unit = {
+  "Option" should "remain Option" in {
     val option1: Option[Int] = Some(42)
     val option2: Option[Int] = option1
 
-    assertEquals(option1, option2)
+    option1 should be (option2)
   }
 
-  /** Tests implicit option conversion with nested options */
-  @Test def nestedOptionConversion(): Unit = {
+  "Option" should "be implicitly converted to nested Option" in {
     val option: Option[Int] = Some(42)
     val nested: Option[Option[Int]] = option
 
-    assertEquals(Some(option), nested)
-  }
-
-  /** Shows one of possible uses */
-  @Test def demonstration(): Unit = {
-    def helper[T](flag: Boolean, value: => T): Option[T] = {
-      if (flag) value else None
-    }
-
-    assertEquals(Some(42), helper(flag = true, 42))
-    assertEquals(Some("Hello"), helper(flag = true, "Hello"))
-    assertEquals(None, helper(flag = false, null))
+    nested should be (Some(option))
   }
 }
